@@ -21,13 +21,19 @@ The system integrates:
 ## 📁 Directory Structure
 
 FedUAV-TwinBench/
+├── datasets/
+│ ├── drone/
+│ │ ├── raw/
+│ │ ├── processed/
+│ │ └── federated_clients/
+│ ├── gas_sensor/
+│ │ ├── raw/
+│ │ └── processed/
+│ └── air_quality/
+│ ├── raw/
+│ └── processed/
 │
-├── datasets/ # Real datasets (Drone, Gas Sensor, Air Quality)
-│ ├── drone/{raw,processed,federated_clients}
-│ ├── gas_sensor/{raw,processed}
-│ └── air_quality/{raw,processed}
-│
-├── modules/ # Core modules
+├── modules/
 │ ├── ddpg/ # Local actor-critic model
 │ ├── fdr/ # Federated model aggregation (FedAvg)
 │ ├── semantic_communication/ # Semantic encoder and fidelity scoring
@@ -43,7 +49,6 @@ FedUAV-TwinBench/
 ├── main.py # Entry point to launch experiments
 ├── requirements.txt # Python dependencies
 └── README.md # Project overview
-
 ---
 
 ## 🚀 Key Features

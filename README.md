@@ -1,126 +1,87 @@
-# FedUAV-TwinBench
+# FedUAV-TwinBench: A Modular Testbed for Federated Learning and Digital Twin Optimization
 
-**A Digital Twin-Driven Federated Deep Reinforcement Learning Testbed for UAV-IoT Coordination in Smart Cities**
-
----
-
-## 🌐 Overview
-
-**FedUAV-TwinBench** is a modular, research-oriented testbed that simulates, evaluates, and benchmarks Federated Deep Reinforcement Learning (FDRL) and Digital Twin (DT)-based UAV coordination in IoT-enabled smart city environments. It is designed to optimize real-time decision-making for task offloading, semantic communication, UAV deployment, and energy-aware service migration under mobility constraints.
-
-The system integrates:
-- 🧠 Deep Reinforcement Learning (DDPG) for local offloading decisions  
-- 🔁 Federated Averaging (FedAvg) for decentralized model aggregation  
-- 🛰️ UAV mobility and scheduling based on priority and location  
-- 🔬 Digital Twin-based forecasting for proactive resource management  
-- 🔉 Semantic-aware compression and fidelity control  
-- 📡 Real-world data support from **FedAIoT Benchmark**
+FedUAV-TwinBench is a reproducible and extensible Python-based testbed designed to simulate and evaluate Federated Learning (FL), Digital Twin (DT), UAV coordination, semantic communication, and service migration across smart city datasets.
 
 ---
 
-## 📁 Directory Structure
+## 📌 Features
+- **Digital Twin-driven prediction**: Delay, energy, and queue forecasting per client.
+- **Federated Deep Reinforcement Learning**: DDPG + FedAvg for multi-client collaboration.
+- **Semantic-aware communication**: Fidelity-aware selection and scoring.
+- **Energy-efficient service migration**: DT-guided trigger logic.
+- **Dataset selector**: Run across `casas`, `env_sensors`, and `visdrone` datasets.
+- **Full logging**: Tracks reward, migration, divergence, semantic fidelity, and loss.
 
+---
+
+## 📁 Folder Structure
+```
 FedUAV-TwinBench/
-├── datasets/
-│ ├── drone/
-│ │ ├── raw/
-│ │ ├── processed/
-│ │ └── federated_clients/
-│ ├── gas_sensor/
-│ │ ├── raw/
-│ │ └── processed/
-│ └── air_quality/
-│ ├── raw/
-│ └── processed/
-│
-├── modules/
-│ ├── ddpg/ # Local actor-critic model
-│ ├── fdr/ # Federated model aggregation (FedAvg)
-│ ├── semantic_communication/ # Semantic encoder and fidelity scoring
-│ ├── service_migration/ # Migration decisions based on utility
-│ ├── digital_twin/ # Predictive modeling
-│ ├── uav_scheduling/ # Priority-aware greedy UAV assignment
-│ └── data_preprocessing/ # Dataset loaders, cleaners, and splitters
-│
-├── models/ # Saved models and checkpoints
-├── unity_integration/ # Unity-Azure communication layer
-├── simulations/ # NS-3 or synthetic result evaluation
-├── utils/ # Logger and config scripts
-├── main.py # Entry point to launch experiments
-├── requirements.txt # Python dependencies
-└── README.md # Project overview
----
-
-## 🚀 Key Features
-
-- ✅ **DDPG**-based offloading at IoT devices  
-- ✅ **FedAvg**-based aggregation at UAV edge nodes  
-- ✅ **Semantic communication** with fidelity control  
-- ✅ **Digital Twin-driven prediction** of air quality and UAV energy  
-- ✅ **UAV scheduling and service migration** under resource constraints  
-- ✅ **Real-world datasets** from **FedAIoT**  
-- ✅ Modular and extendable architecture for Smart City applications  
+├── datasets/                # Preprocessed federated datasets
+├── modules/                # Core modules: dt, fdr, ddpg, etc.
+├── simulations/            # Store logs, screenshots, or results
+├── utils/                  # Logger + plotting tools
+├── logs/                   # Auto-generated logs (CSV + PNG)
+├── main.py                 # Main experiment loop
+```
 
 ---
 
-## 🛠️ Getting Started
-
-### 1. Clone the Repository
-
+## 🚀 How to Run
 ```bash
-git clone https://github.com/irealarsi/FedUAV-TwinBench.git
-cd FedUAV-TwinBench
+# Run with CASA dataset (or visdrone/env_sensors)
+python main.py --dataset casas
+```
 
+Then generate plots:
+```bash
+python utils/plotter_semcom.py
+python utils/plotter_fl.py
+python utils/plotter_reward_energy.py
+```
 
-### 2. Create Python Environment
+---
 
-python -m venv venv
-venv\Scripts\activate   # Windows
-pip install -r requirements.txt
+## 📊 Sample Results (CASAS Dataset)
+| Metric                     | Round 1 | Round 5 |
+|---------------------------|---------|---------|
+| Avg Reward                | -0.88   | -0.35   |
+| Avg Delay (ms)           | 0.19    | 0.08    |
+| Energy Consumption (J)   | 0.12    | 0.06    |
+| Semantic Fidelity (avg)  | 0.42    | 0.87    |
+| Clients Migrated (%)     | 40%     | 10%     |
 
-### 3. Preprocess the Datasets
+📂 Output Images:
+- `reward_trend.png`
+- `semantic_vs_energy.png`
+- `fl_divergence_trend.png`
 
-cd modules\data_preprocessing
-python preprocess_drone.py
-python preprocess_gas_sensor.py
-python preprocess_air_quality.py
+---
 
-### 4. Run Main Testbed
+## ⚗️ Ablation Study Configuration
+To run ablation studies:
+- Disable DT predictions → comment out `dt.predict()` and use real-time row values.
+- Disable semantic selection → replace `select_clients()` with `random.sample(...)`
+- Compare logs and plot differences in:
+  - reward_trend.png
+  - semantic_fidelity_trend.png
+  - fl_divergence_trend.png
 
-python main.py
+---
 
-📊 Datasets Used
-Dataset	Description	Use Case
-Drone	UAV flight + sensor logs	Task offloading, DRL state
-Gas Sensor	Environmental gas data	Semantic fidelity simulation
-Air Quality	Urban air metrics (PM2.5, etc.)	DT prediction and UAV planning
-
-Data sourced from FedAIoT Benchmark
-
-📜 License
-Code: MIT License (LICENSE)
-
-Datasets: CC BY-NC 4.0 (datasets/LICENSE)
-
-@misc{FedUAV-TwinBench,
-  author = {Ahmad Arslan},
-  title = {FedUAV-TwinBench: A Digital Twin-Driven Federated Deep RL Testbed for UAV-IoT Networks},
-  year = {2025},
-  howpublished = {\url{https://github.com/irealarsi/FedUAV-TwinBench}}
+## 📄 Citation
+```
+@misc{fedua2025,
+  title={FedUAV-TwinBench: A Modular Testbed for Federated Deep Learning and Digital Twin Optimization in UAV-Edge Networks},
+  author={Ahmed Arslan et al.},
+  year={2025},
+  note={https://github.com/irealarsi/FedUAV-TwinBench}
 }
+```
 
-👨‍🔬 Contributors
-Ahmad Arslan – Lead researcher, architecture and implementation
+---
 
-📬 Contact
-GitHub: irealarsi
+## 📬 Contact
+For questions or contributions, feel free to open an issue or email: `ahmad.arslan@ucp.edu.pk`
 
-LinkedIn: Ahmad Arslan
-
-Let me know if you want:
-- This content as a downloadable `.md` file.
-- To move next into `ddpg_agent.py` or `fedavg.py` development.
-- Assistance with pushing this to your GitHub.
-
-You're doing a great job setting up a publishable-grade testbed.
-
+---

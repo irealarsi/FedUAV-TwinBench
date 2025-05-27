@@ -1,0 +1,16 @@
+\begin{table}
+\centering
+\caption{Comprehensive Results Table with FL and SemCom Metrics}
+\label{tab:fullresults}
+\begin{tabular}{rrrrlrr}
+\toprule
+ Round &  Avg Reward &  Avg Delay &  Avg Energy & Clients Migrated &  Semantic Fidelity &  FL Divergence \\
+\midrule
+     1 &      -0.213 &      0.137 &       0.152 &           100.0\% &              0.490 &          0.000 \\
+     2 &      -0.213 &      0.136 &       0.154 &           100.0\% &              0.490 &          0.000 \\
+     3 &      -0.213 &      0.137 &       0.151 &           100.0\% &              0.490 &          0.000 \\
+     4 &      -0.215 &      0.140 &       0.150 &           100.0\% &              0.490 &          0.000 \\
+     5 &      -0.215 &      0.136 &       0.157 &           100.0\% &              0.490 &          0.000 \\
+\bottomrule
+\end{tabular}
+\end{table}
